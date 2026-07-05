@@ -134,15 +134,15 @@ python main.py analyze --export-low
 
 ## 测试集
 
-`data/benchmark/test_set.json` 包含 10 道物流领域典型问题，覆盖：
+`data/benchmark/test_set.json` 包含 20 道物流领域典型问题，覆盖：
 
-- VRP基础概念（T001-T002）
-- VRP求解算法（T003）
-- ALNS算法（T004-T005）
-- 动态调度（T006-T007）
-- 车货匹配（T008-T009）
-- 综合应用（T010）
-
+- VRP基础概念
+- VRP求解算法
+- ALNS算法
+- 动态调度
+- 车货匹配
+- 综合应用
+ 
 ## 输出示例
 
 ### eval_results.csv
