@@ -160,6 +160,3 @@ python main.py analyze --export-low
 - `ablation_boxplot.png` - 消融实验箱线图
 - `ablation_comparison.png` - 消融实验各维度对比
 
-## License
-
-MIT
