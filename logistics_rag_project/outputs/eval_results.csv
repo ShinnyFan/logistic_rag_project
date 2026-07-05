@@ -1,0 +1,450 @@
+﻿id,category,difficulty,question,reference_answer,system_answer,relevance,consistency,completeness,overall,judge_reason,retrieved_sources,retrieval_scores,retrieval_max_score,retrieval_mean_score,retrieval_std_score,retrieved_texts
+T001,VRP基础概念,简单,什么是车辆路径问题（VRP）？它有哪些核心约束条件？,车辆路径问题（VRP）是指为一定数量的车辆设计最优配送路线，在满足约束条件下服务所有客户。核心约束包括：车辆容量约束（CVRP）、时间窗约束（VRPTW）、多车型约束、最大行驶距离约束、客户需求必须被满足等。目标函数通常是最小化总行驶距离或总成本。,"车辆路径问题（Vehicle Routing Problem, VRP）是物流调度领域中一个经典且核心的优化问题，其目标是在满足一系列约束条件的前提下，为从配送中心出发的多辆运输车辆规划最优的配送路线，以达到最小化总运输成本的目的。该问题最早由Dantzig和Ramser于1959年提出。
+
+### 核心约束条件
+
+VRP根据实际应用场景的不同，可以衍生出多种变体，每种变体都可能包含特定的核心约束条件。以下是几种常见的约束类型：
+
+- **车辆容量约束 (CVRP)**：这是最基础的一种约束形式，指的是每辆车都有一个最大载重限制，所有分配给该车的任务需求总量不能超过这一限制。
+- **时间窗约束 (VRPTW)**：客户或服务点通常会有一个指定的服务时间窗口，在这个时间段内必须完成对该客户的访问。这要求在设计路线时不仅要考虑距离因素，还要确保能够按时到达每个地点。
+- **多车型约束 (HVRP)**：当车队中存在不同类型的车辆时（例如，它们具有不同的载重量、体积限制或者运营成本），就需要考虑到如何合理地利用这些资源来满足客户需求。
+- **多配送中心 (MDVRP)**：如果系统中有多个配送中心同时服务于一组客户，则需要决定哪些客户应该由哪个配送中心负责，并据此安排相应的运输计划。
+- **取送货问题 (PDP)**：在这种情况下，除了将货物从配送中心送到各个目的地之外，还需要从某些地点收集物品并将其带回配送中心或其他指定位置。
+- **带回程的VRP (VRPB)**：与PDP类似，但更侧重于描述一种情况，即车辆在完成主要配送任务后还需执行额外的取货任务。
+
+以上就是关于车辆路径问题及其一些常见约束条件的基本介绍。针对具体的应用场景，可能会有更多复杂的约束条件需要被纳入考量范围之内。",5,5,5,5.0,回答全面准确地解释了VRP及其核心约束条件，没有偏离主题，信息完整且与公认物流知识一致。,"['knowledge_sample.txt', 'knowledge_sample.txt', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf']","[0.8428, 0.7317, 0.6714, 0.665, 0.6536]",0.8428,0.7129,0.0704,"['# 物流调度领域知识库（示例文本）\n\n## 车辆路径问题（VRP）概述\n\n车辆路径问题（Vehicle Routing Problem, VRP）是物流调度领域中最经典和核心的优化问题之一。该问题最早由Dantzig和Ramser于1959年提出，旨在为多辆从配送中心出发的车辆规划最优配送路线，以最小化总运输成本。\n\n核心约束条件包括：\n- 车辆容量约束（CVRP）：每辆车有最大载重限制\n- 时间', '## 动态车辆路径问题（DVRP）\n\n动态车辆路径问题（Dynamic VRP）指在车辆执行配送任务过程中，新的客户请求会动态到达，需要对原有路线进行实时调整。\n\n### 与静态VRP的本质区别\n静态VRP假设所有信息（客户位置、需求量、时间窗等）在规划前全部已知；而DVRP中部分信息在规划时未知，随着时间推移逐步揭示。\n\n### 重调度策略\n1. 事件驱动重调度：每当新事件发生（如新订单到达、车', 'related to the MDPDTWDD, they have several limitations: (1) Due to the the vehicle routing problem with time windows and dynamic demands\ncomplexity of dynamic demands and the diversity of multi-depot ', 'Y. Hu et al. C o m p u t e r s a n d O p e r a t i o n s R e s e a r c h 159(2023)106337\n2020), it becomes more urgent for platforms to consider drivers’ satis- 2.1. Disruption management in vehicle r', 'VRP Vehicle routing problem\nVRPD Vehicle routing problem with drones\nTerm AAV Autonomous aerial vehicle\nAV Air vehicle\nGV Ground vehicle\nUAV Unmanned air vehicle\nUGV Unmanned ground vehicle\nData avail']"
+T002,VRP基础概念,简单,VRP问题中，CVRP和VRPTW分别代表什么？两者有什么区别？,CVRP（Capacitated VRP）是带容量约束的车辆路径问题，每辆车有最大载重限制，总服务客户需求不能超过车辆容量。VRPTW（VRP with Time Windows）是在CVRP基础上增加了时间窗约束，每个客户有指定的服务时间窗口，车辆必须在规定时间内到达。CVRP只关注容量约束，VRPTW额外关注时间维度。,"在车辆路径问题（Vehicle Routing Problem, VRP）中，CVRP和VRPTW是两种常见的变体，它们各自代表了不同的约束条件，并且有着明显的区别。
+
+### 定义
+- **CVRP (Capacitated Vehicle Routing Problem)**：容量限制的车辆路径问题。这种情况下，每辆配送车辆都有一个最大载重或体积限制，所有客户的货物需求必须在这个限制内被满足。
+- **VRPTW (Vehicle Routing Problem with Time Windows)**：带时间窗的车辆路径问题。除了基本的路线规划外，每个客户点还设定了一个服务的时间窗口，在这个时间段内才能进行服务。
+
+### 区别
+1. **主要约束**：
+   - CVRP关注的是如何有效地利用有限的运输能力来完成所有订单，确保没有一辆车超载。
+   - VRPTW则更侧重于时间管理，确保每位顾客都能在其指定的时间段内得到服务，同时尽量减少等待时间和延迟成本。
+
+2. **优化目标**：
+   - 对于CVRP来说，通常的目标是最小化总的行驶距离或者总成本，同时遵守车辆容量限制。
+   - 而VRPTW不仅需要考虑上述因素，还需要最小化违反时间窗的情况发生，比如迟到罚款等额外费用。
+
+3. **应用场景**：
+   - CVRP适用于那些对装载量有严格要求但对送达时间相对宽松的情况，例如某些类型的快递服务。
+   - VRPTW更适合于那些对交货时间非常敏感的服务行业，如食品配送、紧急物资运送等，其中准时性至关重要。
+
+4. **求解复杂度**：
+   - 两者都是NP难问题，但在实际应用中，由于增加了时间维度上的约束，VRPTW往往比CVRP更加难以解决，尤其是在大规模实例上。
+
+综上所述，虽然CVRP与VRPTW都属于VRP家族成员，但它们分别强调了不同方面的挑战——一个是关于物理空间（即容量）的有效利用，另一个则是关于时间资源的最佳配置。在实际操作中，根据具体业务需求选择合适的模型是非常重要的。",5,5,5,5.0,回答完全切题，信息准确无误，涵盖了所有关键点,"['knowledge_sample.txt', 'knowledge_sample.txt', 'Spliet 等 - 2014 - The vehicle rescheduling problem.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Giménez-Palacios - 2022 - First-mile logistics parcel pickup Vehicle routing with packing constraints under disruption.pdf']","[0.6242, 0.612, 0.5854, 0.5034, 0.5005]",0.6242,0.5651,0.0531,"['# 物流调度领域知识库（示例文本）\n\n## 车辆路径问题（VRP）概述\n\n车辆路径问题（Vehicle Routing Problem, VRP）是物流调度领域中最经典和核心的优化问题之一。该问题最早由Dantzig和Ramser于1959年提出，旨在为多辆从配送中心出发的车辆规划最优配送路线，以最小化总运输成本。\n\n核心约束条件包括：\n- 车辆容量约束（CVRP）：每辆车有最大载重限制\n- 时间', '## 动态车辆路径问题（DVRP）\n\n动态车辆路径问题（Dynamic VRP）指在车辆执行配送任务过程中，新的客户请求会动态到达，需要对原有路线进行实时调整。\n\n### 与静态VRP的本质区别\n静态VRP假设所有信息（客户位置、需求量、时间窗等）在规划前全部已知；而DVRP中部分信息在规划时未知，随着时间推移逐步揭示。\n\n### 重调度策略\n1. 事件驱动重调度：每当新事件发生（如新订单到达、车', '(VRSP). This model is of particular interest to for instance retail\nchains that control both the supplychain and the stores, as they 1.6. Outline\nnotonlyincurthetransportationcosts,butalsoboththedevia', 'theory and application are presented as follows. (1) An extended prob- VRPTWDD problem, where the part of dynamic demands can be delayed\nlem of multi-depot pickup and delivery vehicle routing problem ', 'is combined to operations research algorithms, to deal with the modification of a customer request. Wang et al. (2012) consider\nthe VRPTW for identical cargo delivery. They deal with several types of ']"
+T003,VRP求解算法,简单,求解大规模VRP问题时，为什么通常使用启发式算法而非精确算法？,VRP问题是NP-hard问题，随着客户数量增加，精确算法（如分支定界、分支定价）的计算时间呈指数增长，无法在合理时间内求解大规模实例。启发式算法（如遗传算法、禁忌搜索、ALNS）通过牺牲最优性保证，在可接受时间内获得高质量近似解，满足实际物流调度需求。,"在求解大规模车辆路径问题（VRP）时，通常选择使用启发式算法而非精确算法，主要原因可以从以下几个方面来解释：
+
+1. **计算复杂度**：对于大规模的VRP问题，其本质上是一个NP难问题。这意味着随着问题规模的增长，找到最优解所需的计算时间会呈指数级增长。精确算法如分支定界法、整数规划等虽然能够保证找到全局最优解，但它们的时间复杂度非常高，对于实际应用中的大规模实例来说，往往无法在合理时间内完成计算。
+
+2. **资源消耗**：除了时间成本外，精确算法还可能需要大量的内存空间来存储中间结果或构建搜索树结构。这对于处理包含成千上万个节点的大规模网络而言，可能会超出现有硬件条件的支持范围。
+
+3. **实用性考量**：在很多实际应用场景下，决策者更关心的是能否快速获得一个足够好（接近最优）的解决方案，而不是必须得到绝对最优解。因此，即使启发式方法不能保证每次都找到最佳答案，但如果能够在较短时间内提供高质量的近似解，则更加符合实际需求。
+
+4. **灵活性与适应性**：启发式算法如自适应大邻域搜索（ALNS）、遗传算法等具有较强的灵活性和可调参数，可以根据具体问题的特点进行调整优化。此外，这类算法也更容易结合领域知识设计出高效的局部搜索策略或者启发函数，从而进一步提升求解效率和质量。
+
+5. **多目标优化能力**：现实世界中的物流调度问题往往涉及多个相互冲突的目标（例如最小化总行驶距离同时最大化客户满意度）。在这种情况下，启发式算法通过引入适当的评价指标体系及权重分配机制，可以较好地平衡不同目标之间的关系，而这一点对于传统精确算法来说则较为困难。
+
+综上所述，在面对大规模VRP问题时，考虑到计算效率、资源限制以及实际应用的需求等因素，采用启发式算法通常是更为合适的选择。",5,5,5,5.0,回答完全切题，内容准确无误且全面覆盖了参考答案中的关键点。,"['Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', '基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf']","[0.6444, 0.6338, 0.6246, 0.616, 0.6153]",0.6444,0.6268,0.0111,"['algorithm is relatively complex, requiring effective division and a based on the strategy of ""cluster first, route second"" (CFRS) and ""route\ncombination of constraints. To improve its efficiency, opti', '，\n并提出基于问题领域知识的 自适应大规模邻域搜索算法 （ａｄａｐｔｉｖｅ\ue5e5ｌａｒｇｅ\ue5e5ｎｅｉｇｈｂｏｒｈｏｏｄ\ue5d2\ue5cf\nｓｅａｒｃｈ ，\ue5e5 ＡＬＮＳ ）． 在不同规模算例上的实验结果表明 ， 所提出 的算法相比于模拟退火算法 、 变邻域搜索算法和遗传\ue5d2\ue5cf\n算法在求解质量和求解效率方面都具有一定的优势\n，\n求解质量分别平均提升２３．８\ue5e5％\n、\n２３．３\ue5e5％和 ５．７\ue5e5％\n，\n表明ＡＬＮＳ\ue5d2\ue5cf\n较对比算', 'an approximate solution of the optimal solution and is suitable for multi-\ngence (AI) algorithms. Exact algorithms provide optimal solutions for\ntype combinatorial optimization problems. However, when', '7 0.07 7026 4 0.7 7055 8\nproposed algorithm outperforms other algorithms. First, the average\n8 0.08 7116 4 0.8 6854 3\nvalues obtained by the proposed algorithm are better than that of the\n9 0.09 6870 ', 'repeated calculations, and achieves reduced time complexity. Never- through rules or experience and uses the search algorithm for iterative\ntheless, it requires significant memory space, particularly ']"
+T004,ALNS算法,简单,ALNS算法中，destroy算子和repair算子分别起什么作用？请举例说明。,Destroy算子负责破坏当前解（移除部分客户），例如random removal（随机移除）、worst removal（移除成本最高的客户）、shaw removal（移除相似客户）。Repair算子负责修复被破坏的解（将移除的客户重新插入），例如greedy insertion（贪心插入最小成本位置）、regret-k insertion（考虑后悔值的最优插入）。二者交替使用实现大规模邻域搜索。,"在自适应大邻域搜索（Adaptive Large Neighborhood Search, ALNS）算法中，destroy算子和repair算子是两个核心组成部分，它们共同作用于优化过程中的解空间探索与改进。下面将分别介绍这两个算子的作用，并通过例子来具体说明。
+
+### 1. Destroy算子
+
+**作用：** Destroy算子的主要功能是从当前解中移除一部分元素或结构，从而破坏原有的解决方案。这样做的目的是为了打破局部最优解的限制，使得算法能够探索更广泛的解空间。Destroy操作通常会根据一定的规则或者随机选择的方式去除部分客户点、路径段等，为后续的修复阶段创造条件。
+
+**举例说明：**
+- 假设我们正在解决一个车辆路径问题(VRP)，其中有一个包含多个送货点的初始路线。
+- 使用一种简单的destroy策略，比如“随机移除”(Random Removal)：从现有路线上随机选取一定比例（例如20%）的送货点并将其从路线中删除。
+- 这样一来，原本连续的服务顺序被打断了，留下了一些空缺位置等待被填充。
+
+### 2. Repair算子
+
+**作用：** 在执行完destroy操作之后，repair算子负责重新构建解决方案，即填补由destroy步骤所造成的空白。Repair过程通常是基于某种启发式方法来进行的，旨在找到一种新的、可能更好的方式来安排剩余的任务或节点，以期达到全局最优或接近最优的目标。
+
+**举例说明：**
+- 继续上面的例子，在进行了random removal之后，现在需要使用repair算子来恢复完整的配送计划。
+- 可以采用贪心算法作为repair策略之一：按照距离最近的原则依次插入之前被移除的送货点到现有的路径中。
+- 或者利用更复杂的启发式方法如节约法(Savings Algorithm)，计算每对未服务节点之间的潜在节省成本，并优先考虑那些能带来最大节省效果的连接方式。
+
+总之，通过交替应用destroy和repair算子，ALNS能够在保持良好解质量的同时有效地跳出局部最优陷阱，持续寻找更优解。这种动态调整机制使得ALNS成为处理复杂物流调度问题时非常有效且灵活的方法之一。",5,5,5,5.0,回答完全切题，与公认物流知识一致，且覆盖了参考答案中的所有关键点。,"['Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', '基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf']","[0.7, 0.6548, 0.6537, 0.6256, 0.6193]",0.7,0.6507,0.0285,"['et al. [158] embedded five destroy operations, five repair operations, optimal solution. Unlike exact algorithms, which can have exponential\nand several preprocessing procedures into the ALNS framewor', 'Mara et al. [150] built a framework based on ALNS by using random computationally prohibitive. Related research on approximate algo-\ninitialization, iterative destruction, and repair operators to impr', 'destroy and repair different segments of the solution. alternative to traditional exact and heuristic methods, offering higher\nOther algorithms can also be integrated into the ALNS framework. search a', '可得\n，\n在\ue5d2\ue5cf\n现实验结果 引 入ＧＡＰ值％ 表示对 比算法与 ＡＬＮＳ\ue5d2\ue5cf 解的质 量方面 ＡＬＮＳ 算法在各种规模的算例 中运\ue5d2\ue5cf\n， ：\n的差距 ， ＧＡＰ的计算方式如下所示 ：\ue5d2\ue5cf 行得到 的解均优于 ３ 种对 比算法 ． 在具有 ２０ 个客户\ue5d2\ue5cf\nＧＡＰ\ue5e5＝ \ue5e5Ｔ ｘ Ｔ ｙ ＮＳ\ue5e5 ■ \ue5ce （ ３４ ）\ue5d2\ue5cf 点 的小规模算例 中 ， 所有算法的解的质量相近 ， 这是\ue5d2\ue5cf\nｍａｘ ｛ ', 'used the scanning algorithm to construct an initial solution. Yan et al. toolbox, especially for applications where time and solution quality are\n[163] further improved the ALNS-SP algorithm and obtai']"
+T005,ALNS算法,简单,在ALNS算法中，自适应权重调整机制是如何工作的？,自适应权重调整机制根据每个算子历史表现动态更新其被选中的概率。每次迭代后，根据解的质量改善情况给算子打分：发现新的全局最优解得高分、接受优于当前解的解得中等分、接受劣解得低分。使用轮盘赌选择，得分高的算子有更高概率被选中。权重更新公式通常为：w_new = (1-r)*w_old + r*score/usage_count，其中r为衰减因子。,"在ALNS（自适应大邻域搜索）算法中，自适应权重调整机制是用于动态地调整不同操作（如破坏和修复算子）的选择概率，以提高搜索效率和解的质量。这种机制通过学习历史搜索过程中的信息来自动调节参数，从而使得算法能够更好地探索解空间，并且更快地收敛到高质量的解。下面我将详细解释这一机制的工作原理：
+
+1. **初始化阶段**：首先为每个操作分配一个初始权重或选择概率。这些权重可以基于先验知识设定，也可以均匀分布。
+
+2. **执行阶段**：在每次迭代过程中，根据当前的操作权重随机选取一个破坏算子和一个修复算子对当前解进行修改。这一步骤可能产生比当前解更好或者更差的新解。
+
+3. **接受准则**：使用Metropolis接受准则决定是否接受新解。即使新解质量不如当前解，也有一定概率被接受，这样有助于跳出局部最优解。
+
+4. **更新权重**：根据新解与旧解之间的差异以及所选操作的表现来调整相应操作的权重。如果某个操作经常导致找到更好的解，则其权重会增加；反之则减少。具体来说，可以通过计算每个操作的成功率（即该操作后得到改进解的比例）来进行调整。
+
+5. **自适应调整**：随着算法运行次数增加，不断累积关于各个操作效果的数据，并据此持续优化它们的选择概率。例如，可以采用某种形式的学习率来控制权重变化的速度，确保既不过于激进也不过于保守。
+
+6. **多样性保持**：为了防止过早收敛至局部最优解，还需要采取措施保证解的多样性。这可能包括定期重置某些操作的权重、引入新的操作等策略。
+
+综上所述，在ALNS算法中，自适应权重调整机制通过结合历史搜索经验动态地改变各种操作的重要性，从而实现更加高效灵活地寻找全局最优解的过程。参考资料[1]提到ALNS较好地兼顾了搜索过程的历史信息自适应机制和解的多样性，这正是得益于上述机制的有效运作。",5,5,4,4.7,回答切题且信息准确，但对权重更新的具体公式未详细说明,"['基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf']","[0.675, 0.6617, 0.5986, 0.5873, 0.5871]",0.675,0.6219,0.0384,"['快的速度收敛到更优的解 ， 这是因为ＡＬＮＳ 较好地兼\ue5d2\ue5cf １０ｋｇ， ４种算法的运行结果绘制在图 ８ 中 ． 由 图 ８ 可见 ，\ue5d2\ue5cf\n顾了搜索过程历史信息 自适应机制 和解的多样性\ue5d2\ue5cf 随着无人机载重能力的变化 ＡＬＮＳ 算法始终优于其\ue5d2\ue5cf\n（ ） ，\n（ Ｍｅｔｒｏｐｏｌｉｓ 接受准则 ）， 因此ＡＬＮＳ 在不同规模的实例\ue5d2\ue5cf 他对 比算法 ． 当无人机载重能力 由 ｌ ｋｇ 增加至 ５ｋｇ', 'Mara et al. [150] built a framework based on ALNS by using random computationally prohibitive. Related research on approximate algo-\ninitialization, iterative destruction, and repair operators to impr', '[165] introduced deletion and insertion operators to the LNS framework The effectiveness of AA, including CAA, lies in its ability to balance\nto destroy and reconstruct the initial solution and design', 'used the scanning algorithm to construct an initial solution. Yan et al. toolbox, especially for applications where time and solution quality are\n[163] further improved the ALNS-SP algorithm and obtai', 'To tune parameters in the extended ALNS heuristic for the pre-\nand the benchmark method are both coded in C++.\ndisruption phase, we set initial parameter values following an early\nstudy by Ropke and P']"
+T006,动态调度,简单,什么是动态车辆路径问题（DVRP）？它与静态VRP有何本质区别？,动态车辆路径问题（DVRP）中，部分信息（如新订单、交通状况）在规划初期不可知，在车辆执行任务过程中实时出现。与静态VRP的本质区别在于：静态VRP所有信息预先已知，可一次性完成全局优化；DVRP需要在线决策，根据实时信息持续调整路线，通常采用滚动时域优化或事件驱动重调度策略。,"### 动态车辆路径问题（DVRP）概述
+
+动态车辆路径问题（Dynamic Vehicle Routing Problem, DVRP）是指在车辆执行配送任务过程中，新的客户请求会动态到达，需要对原有路线进行实时调整。这种情况下，调度系统必须能够快速响应新出现的需求，并重新规划最优的配送路线。
+
+### 与静态VRP的本质区别
+
+1. **信息已知性**：
+   - **静态VRP**：假设所有信息（如客户位置、需求量、时间窗等）在规划前全部已知。这意味着在开始配送之前，所有的客户需求和约束条件都是确定的。
+   - **DVRP**：部分信息在规划时未知，随着时间推移逐步揭示。例如，新的订单可能在配送过程中不断到达，导致原有的路线计划需要频繁调整。
+
+2. **决策过程**：
+   - **静态VRP**：通常是一次性的优化过程，在所有信息都已知的情况下，通过算法生成最优或近似最优的配送路线。
+   - **DVRP**：涉及多次重调度，每次新事件发生（如新订单到达、车辆故障等）时，都需要重新评估当前情况并调整路线。这要求算法具有较高的灵活性和响应速度。
+
+3. **复杂性和计算难度**：
+   - **静态VRP**：虽然本身也是一个NP难问题，但其解决方案相对稳定，一旦找到较优解后无需频繁更改。
+   - **DVRP**：由于需要实时处理新信息并做出相应调整，因此在计算上更为复杂，且对算法的实时性能有较高要求。
+
+4. **应用场景**：
+   - **静态VRP**：适用于那些可以提前准确预测客户需求的情况，比如定期送货服务。
+   - **DVRP**：更适合于需求波动较大、难以完全预见的场景，例如即时配送服务、紧急救援物资运输等。
+
+总之，DVRP相较于传统的静态VRP更加注重系统的适应性和反应能力，能够在面对不确定性和变化时提供更灵活高效的解决方案。",5,5,5,5.0,回答切题，内容准确且全面,"['knowledge_sample.txt', 'knowledge_sample.txt', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf']","[0.8477, 0.7182, 0.6494, 0.6362, 0.6335]",0.8477,0.697,0.0814,"['## 动态车辆路径问题（DVRP）\n\n动态车辆路径问题（Dynamic VRP）指在车辆执行配送任务过程中，新的客户请求会动态到达，需要对原有路线进行实时调整。\n\n### 与静态VRP的本质区别\n静态VRP假设所有信息（客户位置、需求量、时间窗等）在规划前全部已知；而DVRP中部分信息在规划时未知，随着时间推移逐步揭示。\n\n### 重调度策略\n1. 事件驱动重调度：每当新事件发生（如新订单到达、车', '# 物流调度领域知识库（示例文本）\n\n## 车辆路径问题（VRP）概述\n\n车辆路径问题（Vehicle Routing Problem, VRP）是物流调度领域中最经典和核心的优化问题之一。该问题最早由Dantzig和Ramser于1959年提出，旨在为多辆从配送中心出发的车辆规划最优配送路线，以最小化总运输成本。\n\n核心约束条件包括：\n- 车辆容量约束（CVRP）：每辆车有最大载重限制\n- 时间', 'VRP Vehicle routing problem\nVRPD Vehicle routing problem with drones\nTerm AAV Autonomous aerial vehicle\nAV Air vehicle\nGV Ground vehicle\nUAV Unmanned air vehicle\nUGV Unmanned ground vehicle\nData avail', 'ing problem with time windows (MDVRPTW) and pickup and delivery As an important extension of the vehicle routing problem, the\nvehicle routing problem with time windows (PDVRPTW) have limited VRPTWDD n', 'dynamic vehicle routing problem in Industry 4.0 approach. J.Manag.Anal. 8 (1),\n69–83. Konstantakopoulos, G.D., Gayialis, S.P., Kechagias, E.P., 2022. Vehicle routing problem\nand related algorithms for']"
+T007,动态调度,简单,处理动态调度问题时，常用的重调度策略有哪些？,常用重调度策略包括：1）事件驱动重调度（新订单到达时立即触发重新规划）；2）周期性重调度（按固定时间间隔重新优化）；3）混合策略（结合事件驱动和周期性）。此外还有：局部修补策略（仅调整受影响路线）、等待策略（积累订单到一定数量再重调度）、预测性重调度（基于历史数据预测未来需求提前规划）。,"在处理动态调度问题时，重调度策略的选择对于保持服务质量和效率至关重要。根据提供的参考资料，可以总结出几种常用的重调度策略：
+
+1. **基于车辆可用性的反应性策略**：Giménez-Palacios等人(2022)提出了一种方法来解决包含时间窗和三维装载约束的第一英里物流包裹取件车辆路径问题，并且针对不同数量的可用运输工具提出了三种反应性策略以应对新客户的需求或已知客户需求的变化。这种策略强调了根据当前车队状态灵活调整路线的重要性。
+
+2. **重新优化策略**：Wang等(2025)介绍了一种用于解决多仓库带时间窗口及动态需求的取送货车辆路径问题的方法。当出现新的动态需求时，该方法能够重新规划服务安排。这种方法通过持续地评估并更新最优解来适应环境变化。
+
+3. **弹性策略结合遗传算法**：Li等人(2023c)将一种弹性策略嵌入到了遗传算法中，旨在提高对不确定性和变动性的响应能力。此方法允许解决方案具有一定的灵活性，在面对突发事件时能够快速做出调整而不完全依赖于从头开始计算新的最优解。
+
+4. **场景分析法**：Hu等(2023)采用了一种基于情景的方法来恢复因中断而受到影响的取送任务。这种方法考虑了多种可能发生的中断情况，并为每种情况制定了相应的恢复计划，从而能够在实际发生中断时迅速采取行动。
+
+综上所述，这些策略各有特点，适用于不同类型的问题情境。选择合适的重调度策略需要综合考量问题的具体要求、资源状况以及期望达到的服务水平等因素。",3,4,2,3.0,回答提供了一些关于重调度策略的信息，但与参考答案中的关键点匹配度较低,"['Giménez-Palacios - 2022 - First-mile logistics parcel pickup Vehicle routing with packing constraints under disruption.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf']","[0.6463, 0.6399, 0.6375, 0.6124, 0.6105]",0.6463,0.6293,0.0149,"['geneous fleet, with time windows and three-dimensional packing constraints. Moreover, we\npropose an approach to tackle the dynamic problem, in which the routes can be modified\nto accommodate disruptio', 'changes for satisfying dynamic pickup demands. The numerical results et al. (2021)proposed a re-optimization strategy to solve the VRPTWDD,\nof a real-world case study in Chongqing city, China show tha', '2.5. Dynamic programming more valuable for tackling the intricacies of large-scale logistical\nchallenges.\nDynamic programming (DP) decomposes the given problem into\nseveral subproblems and solves them', 'address these complexities through diversified multi-objective and\nmulti-stage optimization, expanding combination modes, and inte- 10.3. Bridging the gaps between theory and practice\ngrating multiple', 'Y. Hu et al. C o m p u t e r s a n d O p e r a t i o n s R e s e a r c h 159(2023)106337\nhandle a disruption sooner than periodic methods. Previous research elements in R(i) is mostly 1 (i.e., |R(i)| ']"
+T008,车货匹配,简单,车货匹配问题中，如何构建匹配模型？需要考虑哪些关键因素？,车货匹配模型通常构建为二分图匹配问题或指派问题。关键因素包括：1）车辆属性（车型、载重、容积、当前位置）；2）货物属性（重量、体积、起终点、时间要求）；3）匹配成本（空驶距离、等待时间、绕路成本）；4）约束条件（车辆容量、时间窗、货物兼容性）。模型目标通常为最小化总成本或最大化匹配成功率。,"在车货匹配问题中，构建一个有效的匹配模型需要综合考虑多个关键因素，并采用合适的算法和技术来实现高效的匹配。以下是一个结构化的回答，涵盖了构建匹配模型的关键步骤和需要考虑的因素。
+
+### 1. 关键因素
+在构建车货匹配模型时，需要考虑以下几个关键因素：
+
+- **车辆属性**：包括车型、载重能力、容积、当前位置、目的地等。
+- **货物属性**：包括重量、体积、起始点、终点、装货日期、卸货日期等。
+- **成本因素**：包括空驶距离、绕路成本、等待时间、装卸费用等。
+- **约束条件**：包括车辆容量限制、时间窗限制、货物兼容性（如危险品、冷链等）。
+
+### 2. 构建匹配模型的步骤
+
+#### 2.1 数据预处理
+- **地理位置编码**：使用Geohash或H3对车辆和货物的地理位置进行编码，以便快速筛选候选车辆。
+- **数据清洗**：确保所有输入数据的准确性和一致性，去除无效或错误的数据。
+
+#### 2.2 约束过滤
+- **硬约束过滤**：首先根据车辆容量、时间窗等硬约束条件，筛选出符合条件的车辆。
+- **软约束计算**：对于通过硬约束筛选的车辆，进一步计算其软约束成本，如空驶距离、绕路成本等。
+
+#### 2.3 初始匹配生成
+- **贪心算法**：使用贪心算法快速生成初始匹配方案。例如，优先选择成本最低的车辆进行匹配。
+- **局部优化**：对初始匹配方案进行局部交换优化，以进一步降低总成本。
+
+#### 2.4 预测与动态调整
+- **需求预测**：利用机器学习模型预测未来的供需情况，提前进行匹配。
+- **动态调度**：在实际运营过程中，根据实时数据动态调整匹配方案，应对突发情况。
+
+### 3. 具体技术与方法
+- **空间索引**：使用Geohash或H3对地理位置进行编码，提高搜索效率。
+- **多级过滤**：先过滤硬约束，再计算软约束成本，逐步缩小候选范围。
+- **贪心+局部优化**：结合贪心算法和局部优化，快速生成高质量的匹配方案。
+- **预测匹配**：基于历史数据预测未来供需，提前进行匹配，减少等待时间和空驶距离。
+
+### 4. 机器学习与运筹优化的结合
+- **ML辅助预测**：使用机器学习模型预测旅行时间、客户需求等不确定参数，提高规划准确度。
+- **强化学习**：利用强化学习学习优化策略，如ALNS中的算子选择策略、VRP中的客户选择策略等。
+- **端到端学习**：使用神经网络（如Pointer Network、Attention Model）直接学习从问题实例到最优解的映射，在大规模问题上快速生成高质量解。
+
+通过以上步骤和方法，可以构建一个高效且灵活的车货匹配模型，满足实际运营中的各种需求。",5,5,5,5.0,回答全面且准确，涵盖了构建车货匹配模型所需的所有关键因素和步骤。,"['knowledge_sample.txt', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf']","[0.6177, 0.5561, 0.5507, 0.5447, 0.531]",0.6177,0.56,0.03,"['### 关键因素\n- 车辆属性：车型、载重、容积、当前位置、目的地\n- 货物属性：重量、体积、起终点、装货日期、卸货日期\n- 成本因素：空驶距离、绕路成本、等待时间、装卸费用\n- 约束条件：车辆容量、时间窗、货物兼容性（危险品、冷链等）\n\n### 实时匹配算法\n1. 空间索引：使用Geohash或H3对地理位置编码，快速筛选候选车辆\n2. 多级过滤：先过滤硬约束（容量、时间），再计算软约束成本\n3', 'value and response time of the proposed solution approach are reduced\n5.4.3. Performance with various matching strategies by using the routing selection heuristic, mainly because candidate re-\nThe ave', 'with tabu search. Besides, the proposed model and algorithm are tested by a real-world case study in Chongqing\ncity, China, and the further analysis indicates that significant improvement can be achie', 'adaptive nondominated sorting genetic algorithm-II (ANSGA-II) while vehicles were executing the preplanned service arrangement for\n(3DAPANSGA-II) is designed to find the Pareto optimal solutions. The ', '(Asghari and Al-e-hashem, 2020; Niu et al., 2021; Wang et al., 2022a).\nFig. 6. Crowding distance and Pareto optimal solution selection. The symbols related to the 3DAPANSGA-II are listed in Table 5and']"
+T009,车货匹配,简单,在车货匹配平台中，如何设计实时匹配算法来提高匹配效率？,实时匹配算法设计要点：1）使用空间索引（如Geohash、KD-Tree）快速筛选候选车辆；2）建立多级过滤机制（先过滤容量不匹配、再过滤时间不兼容、最后计算精确成本）；3）采用贪心+局部优化的两阶段策略，先快速生成初始匹配，再进行局部交换优化；4）引入预测模型预估未来供需，提前预留运力；5）使用消息队列实现异步匹配，降低响应延迟。,"在设计车货匹配平台中的实时匹配算法时，关键在于提高匹配效率的同时确保服务质量。以下是一些基于现有物流优化技术的建议：
+
+### 1. 利用先进的预测模型
+- **需求预测**：通过机器学习或深度学习方法对货物运输需求进行预测，包括但不限于时间、地点以及数量等维度上的变化趋势。这有助于提前做好资源准备。
+- **动态定价**：根据市场需求波动调整运费价格，以激励司机参与高峰期运输任务。
+
+### 2. 应用高效的求解算法
+- **启发式搜索**：如禁忌搜索(Tabu Search)、遗传算法(Genetic Algorithm)等可用于快速找到近似最优解。
+- **自适应大邻域搜索(ALNS)**：结合多种破坏与修复算子，在较短时间内探索更广泛的解决方案空间。
+- **多目标优化**：采用非支配排序遗传算法II(Non-dominated Sorting Genetic Algorithm II, NSGA-II)或其他多目标进化算法来同时考虑成本最小化和服务质量最大化等多个目标。
+
+### 3. 引入智能调度机制
+- **动态调度**：根据实时交通状况、天气条件等因素灵活调整车辆路线及分配方案。
+- **分层规划**：先进行粗略的区域划分和初步匹配，再细化到具体订单层面进行精确匹配。
+- **数字孪生技术**：构建虚拟环境模拟实际运营情况，测试不同策略的效果并持续优化。
+
+### 4. 加强信息共享与协作
+- **开放API接口**：允许第三方应用接入平台，促进数据交换与服务整合。
+- **建立信用评价体系**：鼓励用户之间相互评价，提高整个生态系统的透明度与信任度。
+- **跨平台合作**：与其他物流公司或电商平台合作，扩大货源池和运力池规模。
+
+### 5. 持续监控与反馈循环
+- **性能监测**：定期检查系统运行状态，收集关键指标如响应时间、成功率等。
+- **用户体验调研**：通过问卷调查等方式了解用户需求变化，及时调整产品功能。
+- **迭代改进**：基于数据分析结果不断优化算法参数设置及业务流程设计。
+
+综上所述，通过综合运用上述技术和方法，可以有效提升车货匹配平台的实时匹配效率，并为用户提供更加优质的服务体验。",4,5,3,4.0,回答内容丰富且相关，但未完全覆盖参考答案中的所有关键点。,"['Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf']","[0.6138, 0.578, 0.5637, 0.5609, 0.5582]",0.6138,0.5749,0.0206,"['further algorithm optimization. For example, coordinating drones and truck traffic information, multi-layered simulation systems can reflect\ntrucks in urban delivery can enhance efficiency in parcel a', 'with tabu search. Besides, the proposed model and algorithm are tested by a real-world case study in Chongqing\ncity, China, and the further analysis indicates that significant improvement can be achie', 'AI frameworks that enhance solution adaptability. Rigorous testing and capture the real-world intricacies of TDRP, leading to more robust so-\nevaluation of algorithms in real-world scenarios are essen', 'adaptive nondominated sorting genetic algorithm-II (ANSGA-II) while vehicles were executing the preplanned service arrangement for\n(3DAPANSGA-II) is designed to find the Pareto optimal solutions. The ', 'value and response time of the proposed solution approach are reduced\n5.4.3. Performance with various matching strategies by using the routing selection heuristic, mainly because candidate re-\nThe ave']"
+T010,综合应用,简单,在物流调度中，如何将机器学习与传统运筹优化算法结合？,机器学习和运筹优化的结合方式：1）ML辅助决策：使用预测模型估计旅行时间、需求量等参数，作为优化模型的输入；2）端到端学习：用神经网络直接学习从问题实例到最优解的映射（如Pointer Network）；3）强化学习优化策略：用RL学习ALNS中的算子选择策略或VRP中的客户选择策略；4）ML加速求解：使用ML预测分支定界中的分支策略或剪枝决策；5）在线学习：根据实际执行反馈持续优化模型参数。,"在物流调度中，将机器学习（ML）与传统运筹优化算法相结合可以显著提高解决方案的质量和效率。这种结合主要通过以下几种方式实现：
+
+### 1. 数据驱动的参数调优
+- **背景**：许多传统运筹学模型依赖于精确的输入参数，如需求预测、运输时间等。这些参数往往难以准确估计。
+- **方法**：利用机器学习技术，特别是监督学习方法，可以从历史数据中学习到更准确的需求预测模型或运输时间预测模型。例如，使用时间序列分析或者基于神经网络的方法来预测未来的需求量。
+- **效果**：提高了模型输入数据的准确性，从而使得最终得到的调度方案更加贴近实际情况。
+
+### 2. 智能化搜索策略
+- **背景**：对于复杂的车辆路径问题(VRP)等NP难问题，找到全局最优解通常非常困难且耗时。
+- **方法**：
+  - **强化学习(RL)**: 可以用来设计自适应的大邻域搜索(ALNS)中的破坏与修复操作选择机制。通过不断尝试不同的操作组合，并根据结果调整策略，RL能够学会在不同情境下选择最有效的操作。
+  - **深度学习(DL)**: 在某些情况下，可以训练一个深度神经网络直接从问题实例映射到近似最优解，尤其是在有大量相似类型的问题实例可供训练的情况下。
+- **效果**：加速了求解过程，同时可能发现传统启发式方法难以触及的新颖高效解法。
+
+### 3. 动态环境下的实时决策支持
+- **背景**：实际运营过程中经常遇到突发事件导致原计划失效的情况。
+- **方法**：结合物联网(IoT)技术和大数据分析，实时收集并处理相关信息；然后利用在线学习算法快速响应变化，调整现有路线或重新规划整个配送网络。
+- **效果**：增强了系统的灵活性和鲁棒性，能够在面对不确定性因素时做出快速而合理的反应。
+
+### 4. 多目标优化
+- **背景**：除了成本最小化外，现代物流企业还关注环境保护、客户满意度等多个目标。
+- **方法**：采用多目标遗传算法(MOGA)等进化计算技术，并引入机器学习辅助评估每个候选解在各个维度上的表现，帮助决策者更好地权衡不同目标之间的关系。
+- **效果**：实现了更加全面均衡的优化结果，满足多样化的需求。
+
+总之，通过将机器学习与传统运筹优化算法相结合，不仅可以充分利用两者的优势互补，还能针对具体应用场景开发出更为智能高效的物流调度系统。",5,5,5,5.0,回答全面覆盖了参考答案中的关键点，且没有与公认物流知识相冲突的地方。,"['Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf']","[0.692, 0.6529, 0.6243, 0.6236, 0.6165]",0.692,0.6419,0.028,"['possible in logistics and transportation management. Ongoing devel-\n7.1. New generated dataset\nopment and refinement of these algorithms promise further advances in\nsolution efficiency, quality, and t', 'ally, the proposed optimization algorithm can be integrated with\nfor this logistics network than other scenarios. Fig. 16shows the service\nthe emerging information technology, including AI, Internet o', 'further algorithm optimization. For example, coordinating drones and truck traffic information, multi-layered simulation systems can reflect\ntrucks in urban delivery can enhance efficiency in parcel a', 'environmental states, action spaces, and reward functions to iteratively models and solving algorithms. Currently, there are two primary dataset\nlearn optimal strategies, DL excels in extracting patte', 'algorithm is relatively complex, requiring effective division and a based on the strategy of ""cluster first, route second"" (CFRS) and ""route\ncombination of constraints. To improve its efficiency, opti']"
+T011,综合应用,中等,请对比分析ALNS中的shaw removal算子和worst removal算子的适用场景、设计原理和优缺点，它们分别适合解决什么类型的问题？,Shaw removal基于相似性移除客户，选择在地理位置、需求、时间窗等方面高度相似的客户组，适用于需要打破局部最优结构、路径间客户交换的场景；优点是能有效探索新的解结构，缺点是计算相似度矩阵开销较大。Worst removal移除对目标函数贡献最大（成本最高）的客户，适用于需要快速降低成本、消除瓶颈路径的场景；优点是实现简单、计算效率高，缺点是容易陷入局部最优。两者通常配合使用，shaw removal负责多样性探索，worst removal负责局部优化。,"在自适应大邻域搜索（ALNS）算法中，Shaw removal算子和Worst removal算子是两种常用的移除策略。它们各自的设计原理、适用场景以及优缺点如下：
+
+### Shaw Removal算子
+
+**设计原理：**
+- Shaw removal算子基于请求之间的相似性来选择要移除的节点。它通过计算两个请求之间的相似度，并根据一定的权重参数（如参考资料[2]提到的φ, η, σ）来决定哪些请求应该被优先移除。
+- 这种方法旨在保持解的质量的同时，通过移除那些对整体解决方案影响较小或与其他请求高度相似的任务来增加多样性。
+
+**适用场景：**
+- 当问题涉及到需要考虑任务间关系时特别有效，例如当某些任务之间存在时间窗口约束或者地理位置接近等特征时。
+- 适用于解决具有复杂约束条件的问题，比如带时间窗的取送货问题(PDPTW)。
+
+**优点：**
+- 能够较好地保留解结构中的关键部分，同时引入变化以探索新的解空间。
+- 有助于提高算法对于特定类型问题的求解效率。
+
+**缺点：**
+- 需要合理设置相似度衡量标准及相应权重，这可能需要大量的实验调参工作。
+- 对于非常大规模的问题实例来说，计算所有请求间的相似度可能会消耗较多计算资源。
+
+### Worst Removal算子
+
+**设计原理：**
+- Worst removal算子直接移除当前解中最“差”的元素，这里的“差”通常是指违反了最多约束条件或导致成本增加最多的任务。
+- 目标是快速改善当前解的质量，通过去除负面影响最大的部分来达到优化目的。
+
+**适用场景：**
+- 在面对简单约束条件且主要关注于快速降低总成本的情况下较为适用。
+- 特别适合处理那些不需要过多考虑任务间相互作用的情况。
+
+**优点：**
+- 实现简单直观，易于理解和实现。
+- 可以迅速减少解中存在的明显缺陷，加速收敛过程。
+
+**缺点：**
+- 可能会破坏原有解的良好结构，尤其是在初期阶段可能导致过早陷入局部最优。
+- 不太适合处理含有复杂依赖关系的任务集合。
+
+### 总结
+- **Shaw removal** 更加灵活多变，能够更好地应对包含多种约束条件的复杂物流调度问题；而**Worst removal** 则以其简洁高效著称，在简化模型下表现优异。
+- 选择哪种算子取决于具体应用场景的需求以及待解决问题的特点。实践中往往还会结合使用这两种或其他类型的移除算子，以充分利用各自的优势。",5,5,5,5.0,回答全面准确，涵盖了两种算子的设计原理、适用场景及优缺点，并且与参考答案中的关键点一致。,"['Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf']","[0.6139, 0.6128, 0.6046, 0.5982, 0.598]",0.6139,0.6055,0.0068,"['gate the effects of different components insides our approach, we then\nanalyze the performance with various matching strategies during the 5.4.2. Performance of the scenario-based approach\npost-disrup', 'Parameters in Shaw removal operators for disruption recovery.\nALNS heuristic for the disruption recovery problem. The DR-PDPTW\nproblem is different from scheduling optimization, especially in the φ η ', 'all removal operators in the proposed ALNS heuristic. In addition, the\ncomparison between the first and third rows clearly demonstrates the between them and ALNS heuristic with 400,000 iterations. Sim', 'ciently by designing a routing selection algorithm, adding pickup- delivery nodes have not been served, i.e., pr ∈P, and dr ∈D. During the\noriented removal operator and keeping multiple recovery solut', 'find little difference in objective values of various solution approaches, disruption types have little impact on objective values and response time\nbut their average response time varies greatly. Not']"
+T012,动态调度,中等,在多车场取送货问题中，动态需求和静态规划之间的矛盾如何解决？请结合重调度策略和预测机制进行说明。,多车场取送货问题中，动态需求与静态规划的矛盾通过以下方式解决：1）采用滚动时域优化框架，在每个决策时刻基于当前已知信息进行局部优化，而非一次性全局规划；2）结合预测性重调度，利用历史数据预测未来订单的时空分布，在规划时为未来需求预留运力；3）使用事件驱动+周期性混合重调度策略，新订单到达触发增量式调整，定期进行全局重新优化；4）引入鲁棒优化思想，在规划阶段考虑需求不确定性，生成对扰动具有容忍度的初始方案。,"在多车场取送货车辆路径问题（MDPDTWDD）中，动态需求与静态规划之间的矛盾主要体现在：一方面，物流服务提供商需要提前制定配送计划以确保资源的有效配置；另一方面，实际操作过程中客户需求可能会发生变化，比如新增订单、取消订单或更改交货时间等。这种不确定性给原有的静态规划带来了挑战。为了解决这一矛盾，可以采用重调度策略和预测机制相结合的方法。
+
+### 1. 预测机制
+
+- **需求预测**：利用历史数据通过统计学方法或者机器学习模型来预测未来一段时间内的潜在需求变化趋势。这有助于企业更好地理解市场波动规律，并据此调整库存水平和服务能力。
+- **情景分析**：基于不同假设条件构建多种可能的发展场景，评估每种情况下对现有计划的影响程度，从而为后续决策提供参考依据。
+
+### 2. 重调度策略
+
+- **实时响应**：当出现新的请求时，系统能够快速识别并立即启动重调度流程，寻找最优解或次优解以适应当前状况。
+- **局部优化**：对于小范围内的变动，可以通过局部调整现有路线而非完全重新计算所有路径的方式来减少计算复杂度，同时保证服务质量不受太大影响。
+- **全局重规划**：面对大规模的需求变更，则需进行全面的路径重组。此时可运用启发式算法如自适应大邻域搜索(ALNS)等技术，在较短时间内找到满意的解决方案。
+- **预留缓冲资源**：预先保留一定比例的运力作为应急使用，以便于应对突发情况下的额外需求。
+
+### 结合应用示例
+
+结合上述两种手段，一种有效的实施方案可能是：
+
+- 初始阶段，根据预测结果制定基础运输方案；
+- 运行期间持续监控实际发生的变化情况；
+- 当检测到显著偏离预期模式时触发预警机制；
+- 根据具体情况选择合适的重调度策略执行调整；
+- 定期回顾总结经验教训，不断优化预测模型及调度规则。
+
+总之，通过建立准确的需求预测体系并配合灵活高效的重调度机制，可以在一定程度上缓解甚至消除动态需求给传统静态规划带来的负面影响，进而提高整个物流系统的运作效率和服务水平。",5,5,5,5.0,回答紧扣题目要求，内容准确无误且全面覆盖了参考答案中的关键点。,"['Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf']","[0.7494, 0.7265, 0.7202, 0.7101, 0.7056]",0.7494,0.7224,0.0154,"['demands. (3) Valid model formulations for the integration of pickup and et al., 2018; Kocatürk et al., 2021).\ndelivery services and the insertion of dynamic demands among multiple\nlogistics facilities', 'PDVRPTWDD. Regardless of which strategy is adopted to handle the vehicle routing problem from a novel perspective, where the trans-\ndynamic demands in the PDVRPTWDD, the related constraints (e.g., por', 'delivery vehicle routes, thereby achieving rational resource configura-\ntion and improve transportation efficiency. Furthermore, an insertion 2.2. PDVRPTWDD\nstrategy is proposed to find appropriate se', 'theory and application are presented as follows. (1) An extended prob- VRPTWDD problem, where the part of dynamic demands can be delayed\nlem of multi-depot pickup and delivery vehicle routing problem ', 'bi-objective mathematical model considering dynamic demands and ment is common and relevant. Accordingly, several scholars have\nopen-closed pickup and delivery routes is established to minimize the st']"
+T013,ALNS算法,中等,在卡车与无人机协同配送问题中，ALNS算法需要如何扩展才能同时处理卡车路径和无人机路径？请说明关键的编码方式和算子设计思路。,卡车与无人机协同配送的ALNS扩展需要：1）编码方式采用双层编码，上层表示卡车访问序列，下层表示每个卡车停靠点对应的无人机起飞/降落决策；2）destroy算子扩展：除了移除卡车客户外，还需考虑移除无人机服务点、拆分卡车-无人机协同点；3）repair算子需要考虑无人机续航约束，在插入时检查无人机飞行距离是否在电池续航范围内；4）引入专门的协同算子，如将部分卡车客户转为无人机服务、合并相邻无人机任务等；5）在目标函数中同时考虑卡车行驶距离和无人机飞行距离。,"在卡车与无人机协同配送问题中，自适应大邻域搜索（ALNS）算法的扩展需要特别考虑如何同时优化卡车路径和无人机路径。这种扩展不仅涉及到编码方式的设计，还需要精心设计算子来处理两者之间的协作关系。以下是关键的编码方式和算子设计思路：
+
+### 编码方式
+
+1. **混合编码**：采用一种能够同时表示卡车路径和无人机路径的编码方案。例如，可以使用一个序列来表示所有客户点的访问顺序，其中特定标记区分哪些部分由卡车服务、哪些部分由无人机服务。此外，还需记录每个无人机起飞和降落的具体位置。
+
+2. **双层结构**：另一种方法是采用双层或分层编码策略，上层编码代表卡车的路线，下层则为每辆卡车上搭载的无人机的服务计划。这样做的好处是可以更直观地反映出卡车-无人机系统的工作流程，并且便于独立调整两者的操作。
+
+### 算子设计
+
+#### 1. 拆分/合并算子
+- **拆分**：将一条较长的卡车路径分割成几段较短的路径，并尝试让无人机承担某些路段上的送货任务。
+- **合并**：相反地，如果发现某些无人机路径过于分散或者效率低下，则可考虑将其重新整合到卡车路径中去。
+
+#### 2. 交换算子
+- 在卡车之间或无人机之间交换客户点，以探索不同的组合方式，从而可能找到更优解。
+- 特别注意保持无人机飞行范围内的约束条件。
+
+#### 3. 插入/删除算子
+- **插入**：选择一个未被服务的客户点并尝试将其插入现有路径中，既可以是卡车也可以是无人机。
+- **删除**：移除路径中的某个节点，然后重新安排剩余节点的位置，这有助于打破局部最优解。
+
+#### 4. 重定位算子
+- 对于已经分配给无人机的任务，考虑是否可以通过改变其起飞/降落地点来进一步减少总成本或时间。
+
+#### 5. 聚类算子
+- 如参考文献[3]所示，利用聚类技术（如K-means）对客户进行分组，使得同一组内的客户距离较近，便于车辆或无人机集中配送。之后再根据这些簇生成具体的车辆及无人机路径。
+
+通过上述方法，ALNS能够在解决卡车-无人机联合配送问题时更加灵活高效地探索解决方案空间，同时确保所得到的结果既满足实际应用需求又能达到较高的优化水平。需要注意的是，在具体实现过程中还需结合实际情况调整参数设置以及算法细节。",5,5,4,4.67,回答全面且准确，但对双层编码的描述略显不足,"['Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Gao 等 - 2023 - Scheduling trucks and drones for cooperative deliveries.pdf', '基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', 'Gao 等 - 2023 - Scheduling trucks and drones for cooperative deliveries.pdf', 'Gao 等 - 2023 - Scheduling trucks and drones for cooperative deliveries.pdf']","[0.7068, 0.694, 0.6887, 0.6875, 0.6756]",0.7068,0.6905,0.0101,"['Keywords: In recent years, research on collaborative routing between trucks and drones (also known as unmanned aerial\nLiterature review vehicles, UAVs) has received considerable attention, with applic', 'veyed. Khoufi et al. (2019) reviewed the drone path optimization problem and introduced a classification method, specifically\nconsidering the vehicles type and number, the routing problem type, soluti', '范围\n，\n因为 ｉｆ－ｍｅａｎｓ 聚类算法以样本点之间的距离\ue5d2\ue5cf\n的调整\n．\n如图２ 所示\n，\n随机选窀的车辆配送点４ 被童新\ue5d2\ue5cf\n大小作为划分＿团的依据 所以划分在一个親团内的\ue5d2\ue5cf\n插入到无人机路段\n３－２\n时\n，\n此时无人机路径\n．\n的降落点\ue5d2\ue5cf\n，\n点距离较近 便于车辆配送包毫至客户 点 在每一个\ue5d2\ue5cf\n， ．\n簇团 内\n，\n通过最近邻算法 ［１（ｆｌ生成车辆路径\n．\ue5d2\ue5cf\n在车辆路 由生成的基', 'Cooperative delivery\nWe formulate a mixed integer programming model for truck groups routes, and for the timing of\nColumn generation\nthe drones’ launching and return to their dedicated truck. The mode', 'visit. Then we use a greedy algorithm to obtain the truck routes.\nStep 5: According to the truck route in Step 4 and the customer assignment in Step 3, each drone’s flying route for serving a\ncustomer']"
+T014,综合应用,困难,在伍国华等人提出的多车辆与多无人机协同配送方法中，自适应大规模邻域搜索算法的权重衰减因子r具体取值为多少？算法中使用了哪几种destroy算子？,根据伍国华等人的论文《基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法》，权重衰减因子r通常取值为0.1。算法中使用的destroy算子包括：random removal（随机移除客户）、worst removal（移除成本最高的客户）、shaw removal（基于相似性移除）、related removal（移除相关客户）、cluster removal（移除聚类客户）等。具体算子组合可能因问题实例而异，需要根据论文原文确认。,"在伍国华等人提出的基于自适应大规模邻域搜索算法（ALNS）的多车辆与多无人机协同配送方法中，关于权重衰减因子r的具体取值并未直接给出。根据提供的参考资料，没有明确提到权重衰减因子r的确切数值。
+
+至于destroy算子，在文献中提到了一种特定的操作方式，即通过将随机选择的车辆配送点重新插入到无人机路径中来改变当前解。这种操作可以被视为一种destroy-repair机制的一部分，其中“destroy”阶段涉及移除或调整现有路径中的某些节点，“repair”阶段则负责修复这些变化以生成新的可行解。然而，具体的destroy算子种类并没有详细列出。通常情况下，ALNS框架下可能采用的destroy算子包括但不限于随机移除、最差移除等策略，但针对该研究的具体应用情况需要进一步查阅原文获取更准确的信息。
+
+综上所述，对于您所询问的权重衰减因子r的具体数值以及所有使用的destroy算子类型，建议直接参考原始论文或联系作者获得更加详尽的数据支持。",5,5,3,4.3,回答切题且信息准确，但对destroy算子的具体类型描述不够全面,"['基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', '基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', '基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', '基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf']","[0.8006, 0.7669, 0.7515, 0.7361, 0.7353]",0.8006,0.7581,0.0242,"['＆ｒ４ 算子对示意图\ue5d2\ue5cf 始解算法和邻域结构\n，\n其他算法参数如表\n\n所示\n．\ue5d2\ue5cf\n\n第 １ 期\ue5d2\ue5cf 伍国 华 等 ： 基于 自 适应 大规模邻域搜索算法的 多 车辆与 多 无人机协同配送方法\ue5d2\ue5cf ２０７\ue5d2\ue5cf\n表 ２ 车辆和无人机的相关参数\ue5d2\ue5cf 表 ３\ue5d2\ue5cf 算法相关参数\ue5d2\ue5cf\n车辆\ue5d2\ue5cf\n速度\ue5d2\ue5cf ５０\ue5e5ｋｍ／ｈ\ue5d2\ue5cf ＳＡ\ue5d2\ue5cf ＶＮＳ\ue5d2\ue5cf ＧＡ\ue5d2\ue5cf ＡＬＮＳ\ue5d2\ue5cf\n最大载荷重量\ue5d2\ue5cf 〇〇\ue5d2\ue5cf\n最大迭代次', '范围\n，\n因为 ｉｆ－ｍｅａｎｓ 聚类算法以样本点之间的距离\ue5d2\ue5cf\n的调整\n．\n如图２ 所示\n，\n随机选窀的车辆配送点４ 被童新\ue5d2\ue5cf\n大小作为划分＿团的依据 所以划分在一个親团内的\ue5d2\ue5cf\n插入到无人机路段\n３－２\n时\n，\n此时无人机路径\n．\n的降落点\ue5d2\ue5cf\n，\n点距离较近 便于车辆配送包毫至客户 点 在每一个\ue5d2\ue5cf\n， ．\n簇团 内\n，\n通过最近邻算法 ［１（ｆｌ生成车辆路径\n．\ue5d2\ue5cf\n在车辆路 由生成的基', 'approach based on improved adaptive large neighborhood search, Sensors 22 https://doi.org/10.1016/j.trc.2021.103280.\n(10) (2022) 3702, https://doi.org/10.3390/s22103702. [187] D. Schermer, M. Moeini, ', '第 １ 期\ue5d2\ue5cf 伍国 华 等 ： 基于 自 适应 大规模邻域搜索算法的 多 车辆与 多 无人机协同配送方法\ue5d2\ue5cf ２０３\ue5d2\ue5cf\n重力加速度\n， ｐ\n为空气密度乂为旋转叶片圆盘面积\n， ｎ\n\ue5ce其中\n：\n五为无人机电池的总能量\n，\n为电池输出功\ue5d2\ue5cf\n为无人机转子数量 ． 因此 ， 无人机的能耗与飞行时间\ue5ce率 ， ｔ 为飞行时间 ． 根据 问 题描述设定符号和变量如\ue5d2\ue5cf\n和装载包裹重量相关 其公式为\ue5ce表 所', '第 １ 期\ue5d2\ue5cf 伍国 华 等 ： 基于 自 适应 大规模邻蜮搜索算法的多 车辆与 多 无人机协同配送方法\ue5d2\ue5cf ２０５\ue5d2\ue5cf\n时 ， 赋予地 分 ； 当新解 ｓ ＊ 比当前觯＾義但被接受准则\ue5d2\ue5cf 点 ３ 个賀虜 ： 点和 ２ 个起龜点 ． 因此 ，： 譲細数ｆｃｓ 由 ＝\ue5d2\ue5cf\n接受时 ，， 赋予购 錄 ， ＇｜｜ 期 ， 赋予＇＇１％ ，： 眞中 ？，１ ＞ 想 ２ 資\ue5d2\ue5cf ｉＮ Ｖｈ ｘ\ue5e5５ ） 确']"
+T015,动态调度,困难,在Spliet等人提出的车辆重调度问题中，如何处理已分配给车辆的客户在重调度时的固定约束？重调度触发条件是什么？,Spliet等人在车辆重调度问题中，将已分配给车辆但尚未服务的客户设为固定约束，即这些客户在重调度时不能改变分配的车辆，但可以调整服务顺序。重调度触发条件包括：新订单到达、车辆故障或延误、交通状况变化、客户时间窗变更等。重调度时需要在保持已承诺服务不变的前提下，最小化新增成本和扰动成本。,"在Spliet等人2014年关于车辆重调度问题（Vehicle Rescheduling Problem, VRP）的研究中，他们提出了一种两阶段启发式方法来解决当某些客户的需求发生变化或出现新的客户需求时的车辆路径重新规划问题。根据您提供的参考资料，我将尝试解答您的两个问题：如何处理已分配给车辆客户的固定约束以及触发重调度的具体条件。
+
+### 1. 处理已分配给车辆客户的固定约束
+
+- **保持原有服务顺序**：对于那些已经被安排到特定路线上的客户点，在进行重调度时通常会尽量保留其原有的服务顺序不变。这意味着如果某个客户A原本是在另一个客户B之前被服务的，则即使需要调整整个路线以适应新情况，也应尽可能保证A仍然先于B被访问。
+- **考虑时间窗口限制**：每个客户都有自己的时间窗口要求，在重新规划过程中必须遵守这些时间窗口约束。因此，即使是固定的客户点，也需要确保它们能够在规定的时间范围内得到服务。
+- **容量限制**：除了时间窗口外，每辆车还有一定的载货能力上限。所以在调整路线时还需考虑到所有固定客户点加上新增加的任务是否超出了单个车辆的最大承载量。
+
+### 2. 重调度触发条件
+
+虽然直接从给出的参考文献中没有明确指出具体的触发条件，但基于该领域的一般实践和研究背景，可以推测出几种可能的情况：
+
+- **需求变化**：当现有客户的需求量发生显著变化（增加或减少），导致原计划不再适用时，就需要启动重调度过程。
+- **突发事件**：如交通堵塞、天气恶劣等不可预见因素影响了当前执行中的运输计划，使得按照原定方案无法按时完成任务。
+- **新订单加入**：突然接收到额外的服务请求，而这些新订单无法通过简单地延长工作时间或其他小范围调整来满足时，也需要对整体路线做出较大改动。
+- **资源变动**：例如某辆货车因故障退出运营，或者有新的可用运力加入车队，这都可能导致需要重新评估并优化现有的配送网络布局。
+
+请注意，上述解释是基于物流调度领域的通用知识以及对相关文献的理解所作出的推断，并非直接引用自指定文档内容。对于更详细的信息，建议查阅原文献获取最准确的数据支持。",5,4,3,4.0,回答切题且与物流知识一致，但对触发条件的具体描述略显不足。,"['Spliet 等 - 2014 - The vehicle rescheduling problem.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf']","[0.6458, 0.6417, 0.6283, 0.627, 0.6212]",0.6458,0.6328,0.0093,"['vehicle rescheduling problem. Transportation Research Part E 2009;45:\nIn our implementation of the two-phase heuristic, we use an\n419–33.\nexact method to solve the reduced CVRP in the second phase. [1', 'changes for satisfying dynamic pickup demands. The numerical results et al. (2021)proposed a re-optimization strategy to solve the VRPTWDD,\nof a real-world case study in Chongqing city, China show tha', 'depot, a new vehicle needs to be dispatched to serve the dynamic pickup the dataset Pr10 of Cordeau’s MDVRPTW benchmark,2 and these in-\ndemand. In the second scenario (Fig. 7(c)), the Vehicle 2 has en', 'Li, J.Q., Mirchandani, P.B., Borenstein, D., 2009. Real-time vehicle rerouting problems Oper. Res. 43, 129–136.\nwith time windows. Eur. J. Oper. Res. 194 (3), 711–727. Sun, P., Veelenturf, L.P., Hewit', 'J. Scheduling 23 (6), 711–731.\ntransferring orders on the vehicle to another becomes necessary. How to\nKatsaliaki, K., Galetsi, P., Kumar, S., 2022. Supply chain disruptions and resilience: a\ndesign r']"
+T016,VRP求解算法,困难,在Giménez-Palacios提出的first-mile物流包裹取件问题中，如何将装箱约束集成到车辆路径问题中？请说明具体的建模方法和约束表达方式。,Giménez-Palacios通过以下方式将装箱约束集成到VRP中：1）将每个包裹的三维尺寸（长宽高）和重量作为额外属性；2）在路径约束外增加加载可行性约束，确保每条路线上所有包裹可以装入车辆货箱；3）考虑包裹的旋转、堆叠限制和易碎品约束；4）采用两阶段方法：先进行路径规划，再对每条路径验证装箱可行性；5）如果装箱不可行，则通过惩罚函数反馈到路径规划阶段进行调整。这种集成方式显著增加了问题的复杂度，需要专门的启发式算法求解。,"在Giménez-Palacios等人研究的first-mile物流包裹取件问题中，将装箱约束集成到车辆路径问题（Vehicle Routing Problem, VRP）的关键在于同时考虑车辆容量限制以及货物尺寸和重量对装载方案的影响。具体来说，这种集成可以通过以下方式实现：
+
+### 1. 定义决策变量
+- **\(x_{ij}\)**: 如果从节点\(i\)到节点\(j\)之间存在一条直接路径，则该二进制变量等于1；否则为0。
+- **\(y_{ik}\)**: 表示物品\(k\)是否被分配给经过节点\(i\)的车辆，是则为1，否则为0。
+
+### 2. 车辆容量约束
+确保每辆车所携带的所有物品总重量不超过其最大载重能力：
+\[ \sum_{k} w_k y_{ik} \leq Q, \quad \forall i \]
+其中，\(w_k\)代表物品\(k\)的重量，\(Q\)表示车辆的最大载重量。
+
+### 3. 空间占用约束
+考虑到不同形状大小的包裹需要合理安排空间布局，可以引入三维装箱模型来描述这一过程。对于每个可能的装载位置\(l\)，定义一个三元组\((x_l, y_l, z_l)\)表示其坐标，并且设置相应的长宽高参数\(L, W, H\)。那么，对于任意两个物品\(k_1, k_2\)如果它们被放置在同一辆车上，则必须满足不重叠条件：
+\[ (x_{k_1} + l_{k_1} \leq x_{k_2}) \lor (x_{k_2} + l_{k_2} \leq x_{k_1}) \]
+\[ (y_{k_1} + w_{k_1} \leq y_{k_2}) \lor (y_{k_2} + w_{k_2} \leq y_{k_1}) \]
+\[ (z_{k_1} + h_{k_1} \leq z_{k_2}) \lor (z_{k_2} + h_{k_2} \leq z_{k_1}) \]
+
+这里\(l_{k}, w_{k}, h_{k}\)分别指代物品\(k\)的长度、宽度和高度。
+
+### 4. 时间窗口与路线连通性约束
+除了上述关于装载方面的特殊要求外，还需要加入标准VRP中的时间窗约束及保证路线连续性的基本规则，比如：
+- 每个客户点只能由一辆车服务一次。
+- 所有车辆都必须从仓库出发并最终返回。
+- 服务开始时间和结束时间需符合给定的时间窗口范围。
+
+通过以上方法，Giménez-Palacios等人的工作成功地将复杂的装箱问题融入到了传统的VRP框架内，从而能够更准确地模拟实际操作中遇到的各种挑战。",5,5,4,4.67,回答全面且准确，但未完全覆盖参考答案中的所有关键点,"['Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Giménez-Palacios - 2022 - First-mile logistics parcel pickup Vehicle routing with packing constraints under disruption.pdf', 'Giménez-Palacios - 2022 - First-mile logistics parcel pickup Vehicle routing with packing constraints under disruption.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Giménez-Palacios - 2022 - First-mile logistics parcel pickup Vehicle routing with packing constraints under disruption.pdf']","[0.6983, 0.6813, 0.6681, 0.6648, 0.662]",0.6983,0.6749,0.0134,"['Computational results show that without compromising solution qual- Carravilla, M.A., Oliveira, J.F., 2022. First-mile logistics parcel pickup: Vehicle\nrouting with packing constraints under disruptio', 'I.Giménez-Palaciosetal. TransportationResearchPartE164(2022)102812\nThe first mile problem is also studied in the context of circular economy supply chains, that needs to organize the collection\nof use', 'Keywords: First-mile logistics tackles the movement of products from retailers to a warehouse or distri-\nFirst-milelogistics butioncentre.Thisfirststeptowardstheendcustomerhasbeenpushedbylargee-commer', 'demands. (3) Valid model formulations for the integration of pickup and et al., 2018; Kocatürk et al., 2021).\ndelivery services and the insertion of dynamic demands among multiple\nlogistics facilities', 'asrequestcancellationrecourseactionscanbeparameterizedatthecustomerlevel.\nFirst-mile logistics does not simply mirror the characteristics and strategies of last-mile delivery. On the one hand, retaile']"
+T017,综合应用,对抗,2024年NeurIPS会议上关于大语言模型在物流调度中的应用有哪些最新研究进展？请详细说明。,该问题涉及的知识内容不在当前知识库的覆盖范围内。知识库中的论文主要涵盖传统运筹优化方法（ALNS、VRP、动态调度等），不包含2024年NeurIPS会议关于LLM在物流调度中应用的最新研究。如果系统能正确识别知识盲区并告知用户参考资料不足，则视为表现良好。,"根据您提供的参考资料，这些文献主要集中在车辆路径问题（VRP）、卡车-无人机联合配送问题（TDRP）以及多仓库取送货车辆路径问题等物流优化领域，并没有直接提到2024年NeurIPS会议上的具体研究进展，特别是关于大语言模型在物流调度中的应用。因此，基于现有资料，我无法提供有关2024年NeurIPS会议上针对这一特定主题的研究成果。
+
+不过，可以推测的是，随着人工智能技术的发展，包括但不限于自然语言处理(NLP)、机器学习(ML)等领域的大语言模型正逐渐被探索应用于更广泛的场景中，物流调度作为其中一个重要的应用场景也不例外。大语言模型可能通过以下几种方式对物流调度产生影响：
+
+1. **需求预测**：利用历史数据训练的语言模型能够帮助更准确地预测未来的货物运输需求。
+2. **智能客服**：为客户提供更加智能化的服务体验，比如自动回答客户关于订单状态的查询。
+3. **路线规划与优化**：虽然传统上这更多依赖于专门设计的算法如ALNS等，但结合NLP技术可以帮助理解复杂的人类指令或偏好设置，从而生成更加个性化的解决方案。
+4. **异常检测与响应**：通过分析文本信息来快速识别潜在的问题点，并提出相应的调整建议。
+
+为了获取2024年NeurIPS会议上关于此话题的确切信息，建议查阅该会议发布的官方论文集或者相关报道。此外，也可以关注其他顶级AI/ML会议和期刊，因为这类跨学科的应用往往会在多个平台上得到讨论。",5,5,4,4.7,回答切题，内容准确且未发现事实性错误；虽未能直接提供2024年NeurIPS会议的具体信息，但合理推测了大语言模型在物流调度中的潜在应用方向。,"['Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf']","[0.5878, 0.5844, 0.582, 0.5632, 0.5587]",0.5878,0.5752,0.0119,"['further research on collaboration and resource sharing strategies can distribution. Transp. Res. Part B Methodol. 131, 26–62.\nprovide operational decision support tools and references for logistics Ca', 'future research directions to advance TDRP development. (IP), and beyond.\nThrough a comprehensive search of databases including Web of However, the effectiveness of exact algorithms is subject to the ', 'scholarly interest in TDRP. This paper summarizes various algorithms,\ndiscusses several application scenarios, and suggests potential research Jie Duan: Writing – review & editing, Writing – original ', 'transition. Finally, based on the discussion, future development trends and research directions in the field are\npredicted.\n1. Introduction delivery has further propelled the research and practical im', '2023). The integration of pickups and deliveries facilitates efficient\noperation of logistics networks and can be achieved by allowing vehicles 2. Literature review\nto perform pickup and delivery serv']"
+T018,综合应用,对抗,请详细说明量子计算在求解大规模车辆路径问题中的最新算法框架和实验结果，包括量子退火和变分量子算法的具体实现细节。,该问题涉及的知识内容不在当前知识库的覆盖范围内。知识库主要关注经典启发式算法（ALNS、遗传算法、禁忌搜索等），不包含量子计算在VRP中的应用。如果系统能正确识别知识盲区并告知用户参考资料不足，则视为表现良好。,"根据您提供的参考资料，这些资料主要集中在基于自适应大规模邻域搜索算法（ALNS）、遗传算法、禁忌搜索等经典计算方法解决车辆路径问题（VRP）及其变种问题上，并未直接涉及量子计算在求解大规模车辆路径问题中的应用。因此，我将基于当前领域内已有的研究成果来回答您的问题。
+
+### 量子计算应用于VRP的背景
+
+随着量子技术的发展，人们开始探索利用量子计算机解决复杂优化问题的可能性，其中包括了经典的NP难问题之一——车辆路径问题(VRP)。量子计算通过其独特的并行处理能力，在理论上能够比传统计算机更高效地找到某些类型问题的最优解或近似解。目前，针对VRP的研究主要集中在两种类型的量子算法：量子退火(Quantum Annealing, QA)和变分量子算法(Variational Quantum Algorithms, VQAs)。
+
+### 量子退火算法
+
+- **原理**：量子退火是一种启发式优化技术，它模仿了物理系统从高温状态逐渐冷却至低温状态的过程，在此过程中寻找系统的最低能量态作为问题的解。
+- **实现细节**：
+  - 将VRP转化为一个Ising模型或者QUBO (Quadratic Unconstrained Binary Optimization)形式的问题。
+  - 使用D-Wave Systems提供的量子退火机进行实验，该设备专门设计用于解决这类特定格式的优化问题。
+  - 通过调整参数如温度下降速率等来控制退火过程，以期获得更好的解决方案质量。
+  
+### 变分量子算法
+
+- **原理**：VQA是一类混合量子-经典算法，其中量子处理器负责执行参数化的量子电路，而经典计算机则用来优化这些参数值，目标是使某个成本函数最小化。
+- **实现细节**：
+  - 构建一个适合于表示VRP解空间的参数化量子电路。
+  - 利用量子门操作对初始状态进行变换，生成候选解。
+  - 通过测量得到的结果反馈给经典计算机，后者据此更新量子电路中的参数。
+  - 迭代上述步骤直至满足停止条件为止。
+
+### 实验结果概述
+
+尽管已有初步尝试将量子计算应用于VRP，但大多数研究仍处于理论探讨阶段。实际测试表明，对于小规模实例，现有量子硬件可能已经能够提供与经典方法相竞争的结果；然而，当面对更大规模的实际应用场景时，由于噪声等因素的影响，当前技术水平下的量子方案还难以展现出明显优势。此外，如何有效地映射复杂的约束条件到量子框架中也是一个亟待解决的问题。
+
+总之，虽然量子计算为解决VRP提供了新的视角，但在将其广泛应用于工业实践中之前，还需要克服许多技术和工程上的挑战。希望未来随着量子技术的进步，我们能看到更多关于这一领域的突破性进展。",5,5,5,5.0,回答准确切题，无事实错误，全面覆盖了量子计算在VRP中的应用情况。,"['基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', 'Wang 等 - 2025 - The multi-depot pickup and delivery vehicle routing problem with time windows and dynamic demands.pdf', '基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', 'Giménez-Palacios - 2022 - First-mile logistics parcel pickup Vehicle routing with packing constraints under disruption.pdf']","[0.5527, 0.5458, 0.5198, 0.519, 0.5159]",0.5527,0.5306,0.0154,"['＆ｒ４ 算子对示意图\ue5d2\ue5cf 始解算法和邻域结构\n，\n其他算法参数如表\n\n所示\n．\ue5d2\ue5cf\n\n第 １ 期\ue5d2\ue5cf 伍国 华 等 ： 基于 自 适应 大规模邻域搜索算法的 多 车辆与 多 无人机协同配送方法\ue5d2\ue5cf ２０７\ue5d2\ue5cf\n表 ２ 车辆和无人机的相关参数\ue5d2\ue5cf 表 ３\ue5d2\ue5cf 算法相关参数\ue5d2\ue5cf\n车辆\ue5d2\ue5cf\n速度\ue5d2\ue5cf ５０\ue5e5ｋｍ／ｈ\ue5d2\ue5cf ＳＡ\ue5d2\ue5cf ＶＮＳ\ue5d2\ue5cf ＧＡ\ue5d2\ue5cf ＡＬＮＳ\ue5d2\ue5cf\n最大载荷重量\ue5d2\ue5cf 〇〇\ue5d2\ue5cf\n最大迭代次', 'with tabu search. Besides, the proposed model and algorithm are tested by a real-world case study in Chongqing\ncity, China, and the further analysis indicates that significant improvement can be achie', '171, 108389, 108389. collaborative vehicle routing problem. Transp. Res. Part B Methodol. 160, 1–20.\nSoeanu, A., Ray, S., Berger, J., Boukhtouta, A., Debbabi, M., 2020. Multi-depot vehicle Zhang, W., ', '，\ue5e5\n．９\ue5d2\ue5cf\nｏｊ２\ue5e5＝\ue5d2\ue5cf＝\ue5e5３０ ，\ue5d2\ue5cf\n本 实验在 小 规模和 大规模客 户 点 算例 中 对\ue5d2\ue5cf ＾３\ue5e5＝\ue5d2\ue5cf＝ １５ ，\ue5e5ｃｕ４\ue5e5＝\ue5d2\ue5cf＝ １０\ue5d2\ue5cf\nＡＬＮＳ 求得 的解与 Ｇｕｒｏｂｉ 求解器得到 的解进行 比\ue5d2\ue5cf 机进行实验 比较 ； 对于大规模算例 ， 安排 ２ 辆车 、 每\ue5d2\ue5cf\n较\n．\n对于小规模算例\n，\n实验修改 了 标准算例\n，\n将客户\ue5d2\ue5cf 辆车携带 ３ 架无人机\n，\n设定', 'proposedinAndradeetal.(2021),whichusesasdecoderapackingalgorithmadaptedfromAlvarezetal.(2015).Thisfirstphase\nfocuses on minimizing the number of vehicles required. In a second phase, a local search al']"
+T019,车货匹配,中等,在车货匹配和VRP求解中，如何评估和权衡解的质量（solution quality）与计算时间（computation time）之间的平衡？请从实际应用角度给出具体策略。,评估解质量与计算时间的权衡策略包括：1）设定时间预算约束，在给定时间内返回找到的最优解；2）使用anytime算法，可以在任意时刻中断并返回当前最优解；3）建立Pareto前沿，展示不同时间预算下的解质量；4）采用多阶段策略：先用快速启发式获得初始解，再逐步用更精确的算法改进；5）离线预计算+在线微调：对常见场景预先计算高质量解，运行时根据实时数据微调。实际应用中通常接受2-5%的最优性差距以换取秒级响应时间。,"在车货匹配和VRP求解中，评估和权衡解的质量与计算时间之间的平衡是一个关键问题。这不仅涉及到算法设计层面的考量，也关系到实际应用场景下的效率与成本控制。以下是从实际应用角度出发的具体策略：
+
+### 1. 明确业务需求与约束
+
+- **定义目标**：首先明确优化的主要目标是什么，比如最小化总运输成本、减少碳排放量或是提高客户满意度等。
+- **识别关键约束**：根据具体业务场景确定哪些是必须遵守的硬性约束（如车辆容量限制、时间窗要求），以及哪些是可以适当放宽的软性约束。
+
+### 2. 选择合适的求解方法
+
+- **精确算法 vs 启发式算法**：对于规模较小的问题实例，可以考虑使用分支定界法、列生成等精确算法来获得最优解；而对于大规模或复杂度较高的问题，则更倾向于采用遗传算法、模拟退火、ALNS等启发式方法，在可接受的时间内找到近似最优解。
+- **混合策略**：结合多种技术的优势，例如先用快速但可能不够准确的方法得到初步方案，再通过局部搜索或其他精细化手段进行改进。
+
+### 3. 设定合理的停止条件
+
+- **时间限制**：为每次运行设定一个最大允许执行时间，一旦超过该阈值就立即终止计算并输出当前最佳结果。
+- **迭代次数/收敛标准**：除了基于时间外，还可以根据算法迭代次数或者连续几轮没有明显改善作为停止依据。
+
+### 4. 动态调整参数
+
+- **自适应机制**：针对不同类型的输入数据自动调整算法内部参数设置，以期达到更好的性能表现。
+- **多阶段处理**：将整个求解过程分为几个阶段，每个阶段采用不同的策略和技术组合，逐步逼近最终答案。
+
+### 5. 并行计算与分布式系统
+
+- 利用现代计算机硬件资源，通过并行化技术加速求解过程。特别是在面对极其庞大复杂的VRP实例时，分布式计算框架能够显著缩短所需时间而不牺牲太多精度。
+
+### 6. 实验验证与持续优化
+
+- 定期对现有模型及其实现方式进行测试评估，并收集反馈信息用于后续改进工作。
+- 关注领域内最新研究成果和技术进展，适时引入新的思想和工具提升整体解决方案水平。
+
+总之，在实际操作过程中需要综合考虑各方面因素灵活应对，既要保证所获解具有足够高的质量满足业务需求，也要确保能够在合理时间内完成任务支持高效运作。",5,5,5,5.0,回答完全切题，没有与公认物流知识冲突，覆盖了参考答案中的所有关键点。,"['knowledge_sample.txt', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf', 'Spliet 等 - 2014 - The vehicle rescheduling problem.pdf', 'Hu 等 - 2023 - Disruption recovery for the pickup and delivery problem with time windows—A scenario-based approach.pdf']","[0.6288, 0.6283, 0.5906, 0.5781, 0.5775]",0.6288,0.6007,0.0232,"['# 物流调度领域知识库（示例文本）\n\n## 车辆路径问题（VRP）概述\n\n车辆路径问题（Vehicle Routing Problem, VRP）是物流调度领域中最经典和核心的优化问题之一。该问题最早由Dantzig和Ramser于1959年提出，旨在为多辆从配送中心出发的车辆规划最优配送路线，以最小化总运输成本。\n\n核心约束条件包括：\n- 车辆容量约束（CVRP）：每辆车有最大载重限制\n- 时间', 'synchronization constraints. Mulumba et al. [157] addressed the VRPD improve both the accuracy of the solutions and the speed at which they\nallowing for pickup and delivery, using diverse selection pr', 'value and response time of the proposed solution approach are reduced\n5.4.3. Performance with various matching strategies by using the routing selection heuristic, mainly because candidate re-\nThe ave', 'altered.However,changingtheworkinghoursofadriveratalate before vehicles are dispatched. We provide a mixed integer\nmomentisveryexpensiveandoftenpracticallyinfeasible. programming formulation based on ', 'Previous research on PDPTW mainly focused on minimizing the total service delay of drivers when disruptions occur.\ntravelling cost, while DR-PDPTW also considers the divergence from\noriginal routes. S']"
+T020,ALNS算法,中等,请从搜索策略、收敛速度、解质量和参数敏感性四个维度，对比分析ALNS算法与禁忌搜索（Tabu Search）算法在求解VRPTW问题时的优劣。,ALNS与禁忌搜索的对比：1）搜索策略：ALNS通过多种destroy/repair算子组合实现大范围邻域探索，搜索更灵活；禁忌搜索通过禁忌表控制搜索方向，避免重复访问。2）收敛速度：ALNS通常收敛更快，因为自适应机制能快速聚焦有效算子；禁忌搜索收敛较慢但更稳定。3）解质量：ALNS在大多数VRPTW基准测试中解质量略优于禁忌搜索，但差异在2%以内。4）参数敏感性：ALNS对衰减因子、算子权重初始值敏感；禁忌搜索对禁忌表长度和渴望准则敏感。总体而言，ALNS更适合大规模、多约束场景，禁忌搜索更适合中小规模、需要稳定解的场景。,"在求解车辆路径问题（VRP）特别是带时间窗的车辆路径问题（VRPTW）时，自适应大邻域搜索算法（ALNS）与禁忌搜索（Tabu Search, TS）都是常用的优化方法。下面从搜索策略、收敛速度、解质量和参数敏感性四个维度对这两种算法进行对比分析。
+
+### 1. 搜索策略
+
+- **ALNS**：采用了一种动态调整的大规模邻域搜索策略，通过自适应地选择不同的破坏和修复算子来生成新的解。这种方法能够有效地探索解空间的不同区域，既保证了全局搜索能力也兼顾了局部搜索效率。
+- **TS**：基于记忆机制避免陷入局部最优解，通过维护一个禁忌表来记录最近访问过的解或移动，并禁止这些解/移动在一定时间内被重新考虑。这有助于跳出局部极小值点，但可能限制了解空间的探索范围。
+
+### 2. 收敛速度
+
+- **ALNS**：由于其灵活多变的操作集以及自适应机制，能够在较短时间内找到高质量的可行解。特别是在处理大规模实例时，ALNS往往表现出更快的收敛特性。
+- **TS**：虽然TS也能快速找到较好的初始解，但由于需要维护禁忌列表并执行复杂的邻居选择过程，因此在某些情况下可能会比ALNS慢一些。此外，当问题规模增大时，TS的计算复杂度也会相应增加。
+
+### 3. 解质量
+
+- **ALNS**：根据参考资料[1]中的实验结果表明，在解决多车辆与多无人机协同配送问题上，ALNS相比其他几种算法（如模拟退火、变邻域搜索等）具有更高的求解质量，平均提升了约20%以上。
+- **TS**：尽管TS也是一种有效的局部搜索技术，但在面对复杂约束条件下的VRPTW问题时，它可能难以达到与ALNS相当的解决方案质量。这是因为TS更侧重于利用历史信息避免循环，而较少关注如何高效地扩展搜索范围。
+
+### 4. 参数敏感性
+
+- **ALNS**：该算法包含多个可调参数，例如不同操作的选择概率、接受新解的标准等。然而，通过适当的初始化设置及在线调整策略，ALNS通常能够较好地应对参数变化带来的影响。
+- **TS**：对于TS而言，关键参数包括禁忌长度、候选列表大小等。这些参数的选择直接影响到算法性能。如果设置不当，则可能导致过早收敛或者长时间无法找到满意解。因此，相对于ALNS来说，TS可能更加依赖于精细的参数调优工作。
+
+综上所述，在处理VRPTW问题时，ALNS相较于TS在搜索策略灵活性、收敛速度以及最终解的质量方面展现出明显优势；而在参数敏感性方面两者都存在一定的挑战，但ALNS通过自适应机制可以在一定程度上缓解这个问题。不过需要注意的是，具体表现还会受到实际应用场景的具体需求和个人偏好等因素的影响。",5,4,5,4.7,回答全面且相关，但在解质量部分提到的具体数值与参考答案有出入,"['基于自适应大规模邻域搜索算法的多车辆与多无人机协同配送方法_伍国华.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf', 'Duan 等 - 2025 - Approaches to the truck-drone routing problem A systematic review.pdf']","[0.7513, 0.6821, 0.6655, 0.6638, 0.6566]",0.7513,0.6839,0.0347,"['，\n并提出基于问题领域知识的 自适应大规模邻域搜索算法 （ａｄａｐｔｉｖｅ\ue5e5ｌａｒｇｅ\ue5e5ｎｅｉｇｈｂｏｒｈｏｏｄ\ue5d2\ue5cf\nｓｅａｒｃｈ ，\ue5e5 ＡＬＮＳ ）． 在不同规模算例上的实验结果表明 ， 所提出 的算法相比于模拟退火算法 、 变邻域搜索算法和遗传\ue5d2\ue5cf\n算法在求解质量和求解效率方面都具有一定的优势\n，\n求解质量分别平均提升２３．８\ue5e5％\n、\n２３．３\ue5e5％和 ５．７\ue5e5％\n，\n表明ＡＬＮＳ\ue5d2\ue5cf\n较对比算', 'SA and TS by using SA to control the main loop of the algorithm and\nImproving the search strategy of an algorithm is beneficial for increasing\nprobabilistically accept non-tabu and non-improved soluti', 'algorithm is relatively complex, requiring effective division and a based on the strategy of ""cluster first, route second"" (CFRS) and ""route\ncombination of constraints. To improve its efficiency, opti', 'speed, poor local search ability, a large number of control variables, and algorithm was used to improve local search efficiency.\na lack of definite termination criteria. Given these challenges, the m', 'solvers, the solution efficiency is limited. Hence, improvements can be enhancing search efficiency.\nmade in terms of optimizing LP solvers, CG strategies, and incorporating Heuristic algorithms can b']"
